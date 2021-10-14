@@ -97,7 +97,7 @@ export interface CreateStyled extends BaseCreateStailed, StyledTags {}
 // @ts-ignore
 const stail: CreateStyled = <P extends object>(
   Component: keyof JSX.IntrinsicElements | ComponentType<P>,
-  options: StailedOptions,
+  options: StailedOptions = {},
 ) => {
   const isNativeElement = typeof Component === 'string'
   const propFilter = makePropFilter<P>(
