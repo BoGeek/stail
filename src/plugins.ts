@@ -1,5 +1,5 @@
 // @ts-nocheck
-import plugin from 'tailwindcss/plugin'
+import * as plugin from 'tailwindcss/plugin'
 import { transformAllClasses } from 'tailwindcss/lib/util/pluginUtils'
 
 export interface ChildConfig {
