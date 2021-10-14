@@ -2,7 +2,7 @@
 //   extends Array<Interpolation<Props>> {}
 
 export interface FunctionInterpolation<Props> {
-  (props: Props): string
+  (props: Props): string | undefined | null | false
 }
 
 export type Interpolation<Props> =
