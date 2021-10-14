@@ -154,12 +154,57 @@ render(
 
 ### Integration with other CSS-in-JS libraries
 
-Stail can be used alongside with `@emotion/css` by using their `css` ability
+Almost all React project nowadays have some CSS-in-JS library that people use, so sometimes it's a requirement to support components
+that were build using them.
 
-For example:
+Stail support wrapping any component that can accept `className` property, so result component of any CSS-in-JS library is supported.
+
+For example with `styled-components`
+
+```ts
+import styled from 'styled-components'
+import stail from 'stail'
+
+const Buttom = styled.button`
+  padding: 8px 16px;
+  //...
+`
+const SmallButton = stail(Button)`
+  !py-1 !px-2 // styled-components prepend className that comes from a props, so in case you're overriding styles use !important
+`
+```
+
+That's it.
+
+Some libraries provide utilities that provide more deep integration to stail. For example: `emotion`, `linaria`, `goober`, etc.
+
+#### Emotion integration
+
+Stail can be used alongside emotion by using `@emotion/css` package and `css` ability
 
 ```ts
 import { css } from '@emotion/css'
+import stail from 'stail'
+
+const Wrapper = stail.div`
+  flex flex-1 rounded
+
+  // Let's disable tap highlight for this component
+  ${css`
+    -webkit-tap-highlight-color: transparent;
+  `}
+`
+```
+
+This makes it possible to add own CSS to your Stailed component.
+
+Warning! Please don't use `css` from a `@emotion/react` package, because it's requires a lot of runtime that we don't want to integrate.
+Later we can create separate entry-point for this kind of integration.
+
+#### Linaria
+
+```ts
+import { css } from '@linaria/core'
 import stail from 'stail'
 
 const Wrapper = stail.div`
@@ -171,10 +216,24 @@ const Wrapper = stail.div`
 `
 ```
 
-So it will be much easier to design your component for situation when Tailwind doesn't have needed classes
+The benefit of Linaria is that it's zero-runtime library, so it's much easier to bundle
 
-Warning! Please don't use `css` from a `@emotion/react` package, because it's have a lot of runtime that we don't want to integrate.
-Later we can create separate entry-point for those, who want more deep integration.
+#### Goober
+
+```ts
+import { css } from 'goober'
+import stail from 'stail'
+
+const Wrapper = stail.div`
+  flex flex-1 rounded
+
+  ${css`
+    -webkit-tap-highlight-color: transparent;
+  `}
+`
+```
+
+Please be accurate, because Goober is not well maintained and it doesn't support comments in it.
 
 ## Tailwind Plugins
 
