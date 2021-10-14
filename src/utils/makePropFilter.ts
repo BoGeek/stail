@@ -3,7 +3,8 @@ import { filterSpecialFields } from './filterSpecialFields'
 export type PropFilter<C> = (prop: PropertyKey) => boolean
 
 /**
- * This method transform props excluding not needed keys from end result
+ * This method is using to exclude props that we should not pass to the child component.
+ * By default it's also stripping $ props for native elements
  */
 export default function makePropFilter<
   P extends object,

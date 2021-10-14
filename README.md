@@ -1,25 +1,52 @@
 # Stail
 
-Styled Components-like working with TailwindCSS.
+Incredible fast template toolkit for making new or re-styling existing components with Tailwind CSS.
 
-Example:
+## Why it's needed?
+
+First of all, I'm tired from CSS-in-JS libraries. They are powerful but slow. Why? Because they building/prefixing/recalculating everything in browser.
+For example, if you use template literals for your components in `emotion` it will make new AST -> CSS string -> style element change for every render with different output. Why? Because in your `${(props) => props.value}` you can return anything starting from a number and ending by returning all new
+styled.
+
+## Why not just use Tailwind in classNames
+
+Just look at this className:
+
+```jsx
+<div
+  onClick={onClick}
+  className={`flex h-56 max-w-71 rounded-lg flex-col relative overflow-hidden flex-1 border border-[#2d34365a] bg-[#2d343653] cursor-pointer flex-basis-30 m-1 sm:h-64 sm:flex-basis-40 sm:m-2 lg:h-96 lg:flex-basis-60 lg:m-3 ${
+    className || ''
+  }`}
+>
+  {/** Card body */}
+</div>
+```
+
+Believe me, this is not the biggest className line that I've seen.
+
+Let's write this mess using Stail:
 
 ```ts
-import stail from 'stail'
-
-const Wrapper = stail.div`
-  // Flex setup
-  flex justify-center items-center
-
-  // Form
-  rounded p-4 bg-gray-300/60
-
-  // Text
-  text-2xl
+const Card = stail.div`
+  // Layout
+  flex flex-col relative flex-1
+  // Style
+  rounded-lg border border-[#2d34365a] bg-[#2d343653] cursor-pointer overflow-hidden
+  /**
+  Height    Flex Basis        Margin   Addition */
+  h-56      flex-basis-30     m-1      max-w-71
+  sm:h-64   sm:flex-basis-40  sm:m-2
+  lg:h-96   lg:flex-basis-60  lg:m-3
 `
 
-render(<Wrapper>Stail Rocks!</Wrapper>, document.body)
+<Card onClick={onClick} className={className}>
+{/** Card body */}
+</Card>
 ```
+
+As you can see it's much easier to read and write. Everything is on their place. Also with Tailwind CSS plugin for VS Code you can easily check
+what each item is representing in end CSS file
 
 ## How to install
 
@@ -105,4 +132,18 @@ You can enable auto-complete and CSS on hover in your IDE by adding additional c
     "stail\\.?\\(?\\s*[\\w,]+\\s*\\)?`([^`]*)"
   ]
 }
+```
+
+8. Overriding base component at render-time for native dom elements
+
+```ts
+const MySuperButton = stail.div`
+  // ...some classes for your button
+`
+
+render(
+  <MySuperButton as="a" href="#">
+    Now I'm a link
+  </MySuperButton>,
+)
 ```

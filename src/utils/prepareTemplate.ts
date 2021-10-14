@@ -18,6 +18,12 @@ export const endMultilineComment = /(\*\/)/
 export const multipleSpaces = /([\s]{2,})/g
 export const singleLineComment = /(\/\/.+)\n/g
 
+/**
+ * This method is trying to optimize template string by trimming spaces, removing comments
+ * and also optimizing template by including predefined constants from a template.
+ *
+ * It returns prepared array of strings and functions to be used internally by a component.
+ */
 export default function prepareTemplate<C>(
   template: readonly string[],
   ...handlers: Interpolation<C>[]
