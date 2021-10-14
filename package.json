@@ -19,6 +19,16 @@
       "require": "./dist/cjs/plugins.js"
     }
   },
+  "typesVersions": {
+    "*": {
+      ".": [
+        "./dist/mjs/index.d.ts"
+      ],
+      "plugins": [
+        "./dist/mjs/plugins.d.ts"
+      ]
+    }
+  },
   "scripts": {
     "prepublish": "in-publish && npm run dist || echo 'Bad mode'",
     "dist": "tsc -p tsconfig.json && tsc -p tsconfig.cjs.json && ./fixup.sh",
