@@ -152,7 +152,7 @@ render(
 )
 ```
 
-### Integration with other CSS-in-JS liraries
+### Integration with other CSS-in-JS libraries
 
 Stail can be used alongside with `@emotion/css` by using their `css` ability
 
@@ -172,6 +172,9 @@ const Wrapper = stail.div`
 ```
 
 So it will be much easier to design your component for situation when Tailwind doesn't have needed classes
+
+Warning! Please don't use `css` from a `@emotion/react` package, because it's have a lot of runtime that we don't want to integrate.
+Later we can create separate entry-point for those, who want more deep integration.
 
 ## Tailwind Plugins
 
