@@ -50,4 +50,17 @@ describe('prepareTemplate', () => {
       'between end begin final',
     ])
   })
+  it('should fix regression', () => {
+    const include = () => 'fourth'
+    expect(prepareTemplate`
+    w-full fixed bottom-0 z-10 backdrop-blur-2xl flex flex-col-reverse
+
+    lg:bottom-auto lg:top-0 lg:!rounded-t-none child:flex-basis-1/2 lg:flex-row
+
+    ${include}
+  `).toMatchObject([
+      'w-full fixed bottom-0 z-10 backdrop-blur-2xl flex flex-col-reverse lg:bottom-auto lg:top-0 lg:!rounded-t-none child:flex-basis-1/2 lg:flex-row',
+      include,
+    ])
+  })
 })
