@@ -1,6 +1,6 @@
 {
   "name": "stail",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "packageManager": "yarn@3.1.0-rc.8",
   "license": "MIT",
   "description": "Use TailwindCSS styled components",
@@ -9,10 +9,12 @@
   "types": "dist/mjs/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/mjs/index.d.ts",
       "import": "./dist/mjs/index.js",
       "require": "./dist/cjs/index.js"
     },
     "./plugins": {
+      "types": "./dist/mjs/plugins.d.ts",
       "import": "./dist/mjs/plugins.js",
       "require": "./dist/cjs/plugins.js"
     }
