@@ -23,9 +23,9 @@ Just look at this className:
 </div>
 ```
 
-Believe me, this is not the biggest className line that I've seen.
+And this is not the biggest className line that I've ever seen.
 
-Let's write this mess using Stail:
+Let's rewrite this into Stail:
 
 ```ts
 const Card = stail.div`
@@ -151,6 +151,27 @@ render(
   </MySuperButton>,
 )
 ```
+
+### Integration with other CSS-in-JS liraries
+
+Stail can be used alongside with Emotion by using their `css` ability
+
+For example:
+
+```ts
+import { css } from '@emotion/react' or //@emotion/css
+import stail from 'stail'
+
+const Wrapper = stail.div`
+  flex flex-1 rounded
+
+  ${css`
+    -webkit-tap-highlight-color: transparent;
+  `}
+`
+```
+
+So it will be much easier to design your component for situation when Tailwind doesn't have needed classes
 
 ## Tailwind Plugins
 

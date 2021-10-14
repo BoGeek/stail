@@ -5,9 +5,15 @@ export interface FunctionInterpolation<Props> {
   (props: Props): string | undefined | null | false
 }
 
+export interface StyledInterpolation {
+  name: string
+  styles: string
+  map: string
+}
+
 export type Interpolation<Props> =
   | InterpolationPrimitive
-  // | ArrayInterpolation<Props>
+  | StyledInterpolation
   | FunctionInterpolation<Props>
 
 export type InterpolationPrimitive = null | undefined | false | string
@@ -17,6 +23,11 @@ export const beginMultilineComment = /(\/\*\*?)/
 export const endMultilineComment = /(\*\/)/
 export const multipleSpaces = /([\s]{2,})/g
 export const singleLineComment = /(\/\/.+)\n/g
+
+export const isStyledInterpolation = (
+  handler: Interpolation<any>,
+): handler is StyledInterpolation =>
+  typeof handler === 'object' && !!handler?.name
 
 /**
  * This method is trying to optimize template string by trimming spaces, removing comments
@@ -86,6 +97,10 @@ export default function prepareTemplate<C>(
     }
     if (typeof handler === 'string') {
       line = `${line.trim()} ${handler.trim()}`
+      resultTemplate.push(line)
+      return
+    } else if (isStyledInterpolation(handler)) {
+      line = `${line.trim()} ${handler.name}`
       resultTemplate.push(line)
       return
     }
