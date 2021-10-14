@@ -154,12 +154,12 @@ render(
 
 ### Integration with other CSS-in-JS liraries
 
-Stail can be used alongside with Emotion by using their `css` ability
+Stail can be used alongside with `@emotion/css` by using their `css` ability
 
 For example:
 
 ```ts
-import { css } from '@emotion/react' or //@emotion/css
+import { css } from '@emotion/css'
 import stail from 'stail'
 
 const Wrapper = stail.div`
