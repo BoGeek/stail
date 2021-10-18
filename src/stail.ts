@@ -135,7 +135,9 @@ const stail: CreateStyled = <P extends object>(
 ) => {
   const isNativeElement = typeof Component === 'string'
   const propFilter = makePropFilter<P>(
-    options.stripSpecialProps ?? isNativeElement,
+    typeof options.stripSpecialProps === 'boolean'
+      ? options.stripSpecialProps
+      : isNativeElement,
     options.shouldForwardProp,
   )
   return createStailedComponent<P>(
