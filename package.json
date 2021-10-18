@@ -21,9 +21,6 @@
   },
   "typesVersions": {
     "*": {
-      ".": [
-        "./dist/mjs/index.d.ts"
-      ],
       "plugins": [
         "./dist/mjs/plugins.d.ts"
       ]
