@@ -1,4 +1,4 @@
-import { ComponentType, FC, forwardRef, memo } from 'react'
+import { ComponentType, FC, forwardRef } from 'react'
 import buildTemplateToClassName from './utils/buildTemplateToClassName'
 import prepareTemplate from './utils/prepareTemplate'
 import { Interpolation } from './utils/prepareTemplate'
@@ -44,46 +44,41 @@ export default function createStailedComponent<
     // Just assign classes
     if (isNative) {
       // @ts-ignore
-      const comp: FC<ComponentProps & SpecificComponentProps> = memo(
-        forwardRef(
-          (
-            { as: As, ...props }: ComponentProps & SpecificComponentProps,
-            ref,
-          ) =>
-            As ? (
+      const comp: FC<ComponentProps & SpecificComponentProps> = forwardRef(
+        ({ as: As, ...props }: ComponentProps & SpecificComponentProps, ref) =>
+          As ? (
+            // @ts-ignore
+            <As
+              ref={ref}
               // @ts-ignore
-              <As
-                ref={ref}
+              {...filterProps(props)}
+              className={buildTemplateToClassName<ComponentProps>(
+                template,
                 // @ts-ignore
-                {...filterProps(props)}
-                className={buildTemplateToClassName<ComponentProps>(
-                  template,
-                  // @ts-ignore
-                  props,
-                )}
-              />
-            ) : (
+                props,
+              )}
+            />
+          ) : (
+            // @ts-ignore
+            <Component
               // @ts-ignore
-              <Component
+              ref={ref}
+              // @ts-ignore
+              {...filterProps(props)}
+              className={buildTemplateToClassName<ComponentProps>(
+                template,
                 // @ts-ignore
-                ref={ref}
-                // @ts-ignore
-                {...filterProps(props)}
-                className={buildTemplateToClassName<ComponentProps>(
-                  template,
-                  // @ts-ignore
-                  props,
-                )}
-              />
-            ),
-        ),
+                props,
+              )}
+            />
+          ),
       )
       comp.displayName = displayName || `Stailed<${Component}>`
       return comp
     } else {
       // @ts-ignore
-      const comp: FC<ComponentProps> = memo(
-        forwardRef((props: ComponentProps, ref) => (
+      const comp: FC<ComponentProps> = forwardRef(
+        (props: ComponentProps, ref) => (
           // @ts-ignore
           <Component
             // @ts-ignore
@@ -94,7 +89,7 @@ export default function createStailedComponent<
               props,
             )}
           />
-        )),
+        ),
       )
       // @ts-ignore
       comp.displayName = displayName || `Stailed<${Component.displayName}>`
