@@ -114,7 +114,7 @@ export default function prepareTemplate<C>(
       return target
     }
     if (typeof item === 'string') {
-      item = item.replace('\n', ' ').replace(multipleSpaces, ' ')
+      item = item.replaceAll('\n', ' ').replace(multipleSpaces, ' ')
       if (previousIsString) {
         // @ts-ignore
         target[target.length - 1] = `${target[target.length - 1]} ${item}`

@@ -18,8 +18,42 @@ export type PropsOf<
 > = JSX.LibraryManagedAttributes<C, ComponentProps<C>>
 
 export interface StailedOptions {
+  /**
+   * Helpful for React DevTools
+   */
   displayName?: string
+  /**
+   * Tells Stail which props it should pass to the wrapped component
+   *
+   * ```ts
+   * const MyButton = stail(Button, {
+   *   shouldForwardProp: (prop) => !['open', 'active'].includes(prop)
+   * })` ... `
+   *
+   * <MyButton
+   *   // Will be forwarded to original Button component
+   *   onClick={handler}
+   *   // Will not be forwarded to original Button component
+   *   open={false}
+   * />
+   * ```
+   */
   shouldForwardProp?(propName: PropertyKey): boolean
+  /**
+   * Strip props starting from `$`.
+   * Enabled for DOM elements, can be enabled for other components.
+   *
+   * ```ts
+   * const Wrapper = stail.div`${props => props.$open ? 'block' : 'hidden'}`
+   * <Wrapper
+   *   // Will be stripped from resulting dom
+   *   $open={true}
+   *   // Will be in resulting dom
+   *   open={true}
+   * />
+   * ```
+   */
+  stripSpecialProps?: boolean
 }
 
 export interface BaseCreateStailed {
@@ -101,7 +135,7 @@ const stail: CreateStyled = <P extends object>(
 ) => {
   const isNativeElement = typeof Component === 'string'
   const propFilter = makePropFilter<P>(
-    isNativeElement,
+    options.stripSpecialProps ?? isNativeElement,
     options.shouldForwardProp,
   )
   return createStailedComponent<P>(

@@ -63,4 +63,21 @@ describe('prepareTemplate', () => {
       include,
     ])
   })
+  it('should fix regression #2', () => {
+    const include = () => 'fourth'
+    expect(prepareTemplate`
+    p-8
+    text-2xl
+    rounded
+    text-black
+    font-bold
+    ${include}
+
+    hover:text-white
+  `).toMatchObject([
+      'p-8 text-2xl rounded text-black font-bold',
+      include,
+      'hover:text-white',
+    ])
+  })
 })

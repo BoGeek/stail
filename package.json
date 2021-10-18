@@ -1,6 +1,6 @@
 {
   "name": "stail",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "packageManager": "yarn@3.1.0-rc.8",
   "license": "MIT",
   "description": "Use TailwindCSS styled components",
