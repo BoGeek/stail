@@ -54,6 +54,20 @@ export interface StailedOptions {
    * ```
    */
   stripSpecialProps?: boolean
+
+  /**
+   * Let you exclude classNames from original Stail component instead of overriding them.
+   * ```ts
+   * const Button = stail.div`rounded py-2 px-4 bg-gray-500 text-white`
+   *
+   * const FlatButton = stail(Button, {
+   *   exclude: ['rounded', 'bg-gray-500 text-white']
+   * })`bg-white border border-gray-500 text-gray-500`
+   *
+   * render(<><Button>I'm rounded</Button><FlatButton>I'm Flat</FlatButton></>)
+   * ```
+   */
+  excludeClassNames?: string[]
 }
 
 export interface BaseCreateStailed {
@@ -145,6 +159,7 @@ const stail: CreateStyled = <P extends object>(
     propFilter,
     isNativeElement,
     options.displayName,
+    options.excludeClassNames,
   )
 }
 

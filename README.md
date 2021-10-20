@@ -121,6 +121,25 @@ const Select = stail(ReactSelect, {
 `
 ```
 
+### Excluding classNames from original Stail component
+
+With stail it's possible to exclude some classNames instead of overriding them.
+
+```ts
+const Button = stail.div`rounded py-2 px-4 bg-gray-500 text-white`
+
+const FlatButton = stail(Button, {
+  exclude: ['rounded', 'bg-gray-500 text-white'],
+})`bg-white border border-gray-500 text-gray-500`
+
+render(
+  <>
+    <Button>I'm rounded</Button>
+    <FlatButton>I'm Flat</FlatButton>
+  </>,
+)
+```
+
 ### VS Code support using Tailwind CSS IntelliSense plugin
 
 You can enable auto-complete and CSS on hover in your IDE by adding additional config to the `settings.json` file:

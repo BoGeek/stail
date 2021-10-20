@@ -16,6 +16,11 @@ export type Interpolation<Props> =
   | StyledInterpolation
   | FunctionInterpolation<Props>
 
+export type StailTemplate<Props = any> = (
+  | string
+  | FunctionInterpolation<Props>
+)[]
+
 export type InterpolationPrimitive = null | undefined | false | string
 
 export const multilineCommentRegEx = /(\/\*\*?[^\*]*\*\/)/g
