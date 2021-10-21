@@ -1,17 +1,10 @@
 import createStailedComponent, {
   CreateStailedComponent,
 } from './createStailedComponent'
-import {
-  ComponentClass,
-  ComponentProps,
-  Ref,
-  ComponentType,
-  ElementType,
-  FC,
-  JSXElementConstructor,
-} from 'react'
+import { ComponentProps, ComponentType, FC, JSXElementConstructor } from 'react'
 import domElements from './utils/domElements'
 import makePropFilter from './utils/makePropFilter'
+import { DecoratedComponent } from './utils/symbols'
 
 export type PropsOf<
   C extends keyof JSX.IntrinsicElements | JSXElementConstructor<any>,
@@ -72,31 +65,6 @@ export interface StailedOptions {
 
 export interface BaseCreateStailed {
   <
-    C extends ComponentClass<ComponentProps<C>>,
-    ForwardedProps extends keyof ComponentProps<C> = keyof ComponentProps<C>,
-  >(
-    component: C,
-    options: StailedOptions,
-  ): CreateStailedComponent<
-    Pick<PropsOf<C>, ForwardedProps>,
-    {},
-    {
-      ref?: Ref<InstanceType<C>>
-    }
-  >
-
-  <C extends ComponentClass<ComponentProps<C>>>(
-    component: C,
-    options?: StailedOptions,
-  ): CreateStailedComponent<
-    PropsOf<C>,
-    {},
-    {
-      ref?: Ref<InstanceType<C>>
-    }
-  >
-
-  <
     C extends ComponentType<ComponentProps<C>>,
     ForwardedProps extends keyof ComponentProps<C> = keyof ComponentProps<C>,
   >(
@@ -115,53 +83,47 @@ export interface BaseCreateStailed {
   >(
     tag: Tag,
     options: StailedOptions,
-  ): CreateStailedComponent<
-    { as?: ElementType },
-    Pick<JSX.IntrinsicElements[Tag], ForwardedProps>
-  >
+  ): CreateStailedComponent<Pick<JSX.IntrinsicElements[Tag], ForwardedProps>>
 
   <Tag extends keyof JSX.IntrinsicElements>(
     tag: Tag,
     options?: StailedOptions,
-  ): CreateStailedComponent<{ as?: ElementType }, JSX.IntrinsicElements[Tag]>
+  ): CreateStailedComponent<JSX.IntrinsicElements[Tag]>
 }
-
-export interface StyledComponent<
-  ComponentPropsOriginal extends {},
-  SpecificComponentProps extends {} = {},
-  JSXProps extends {} = {},
-> extends FC<ComponentPropsOriginal & SpecificComponentProps & JSXProps> {}
 
 export type StyledTags = {
   [Tag in keyof JSX.IntrinsicElements]: CreateStailedComponent<
-    {
-      as?: ElementType
-    },
     JSX.IntrinsicElements[Tag]
   >
 }
-export interface CreateStyled extends BaseCreateStailed, StyledTags {}
 
-// @ts-ignore
-const stail: CreateStyled = <P extends object>(
-  Component: keyof JSX.IntrinsicElements | ComponentType<P>,
+export interface CreateStailed extends BaseCreateStailed, StyledTags {}
+
+const stailRaw: BaseCreateStailed = <
+  C extends
+    | keyof JSX.IntrinsicElements
+    | ComponentType<OriginalProps>
+    | DecoratedComponent<OriginalProps>,
+  OriginalProps extends object = {},
+>(
+  Component: C,
   options: StailedOptions = {},
 ) => {
   const isNativeElement = typeof Component === 'string'
-  const propFilter = makePropFilter<P>(
+  const propFilter = makePropFilter<OriginalProps, OriginalProps>(
     typeof options.stripSpecialProps === 'boolean'
       ? options.stripSpecialProps
       : isNativeElement,
     options.shouldForwardProp,
   )
-  return createStailedComponent<P>(
+  return createStailedComponent<OriginalProps, C>(
     Component,
     propFilter,
-    isNativeElement,
     options.displayName,
     options.excludeClassNames,
   )
 }
+const stail = stailRaw as CreateStailed
 
 domElements.forEach((item) => {
   stail[item] = stail(item)

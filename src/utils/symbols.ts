@@ -15,7 +15,7 @@ export interface DecoratedComponent<Props, ForwardedProps = Props>
 }
 
 export function decorate<Props, ForwardedProps = Props>(
-  component: FC<ForwardedProps>,
+  component: FC<Props>,
   template: (string | FunctionInterpolation<Props>)[],
   decoratedComponent:
     | keyof JSX.IntrinsicElements
