@@ -12,7 +12,7 @@ import {
   StailTemplate,
 } from './utils/symbols'
 import stripClassNamesFromTemplate from './utils/stripClassNamesFromTemplate'
-import makeRender from 'utils/makeRender'
+import makeRender from './utils/makeRender'
 
 export interface CreateStailedComponent<ComponentProps extends {}> {
   (
