@@ -1,10 +1,13 @@
 import { FC, ComponentType } from 'react'
 import { FunctionInterpolation } from './prepareTemplate'
 
+// Symbol for an original component or a JSX tag
 export const StailComponent = Symbol('StailComponent')
 
+// Symbol for template
 export const StailTemplate = Symbol('StailTemplate')
 
+// Symbol for a prop filter
 export const StailFilter = Symbol('StailFilter')
 
 export interface DecoratedComponent<Props, ForwardedProps = Props>

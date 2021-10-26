@@ -5,6 +5,7 @@ export interface FunctionInterpolation<Props> {
   (props: Props): string | undefined | null | false
 }
 
+// Some CSS-in-JS libraries returns object for a css helper
 export interface StyledInterpolation {
   name: string
   styles: string
