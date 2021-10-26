@@ -9,6 +9,7 @@
 yarn-error.log
 
 dist
-*.js
+src/*.js
+dist/*.js
 *.js.map
 *.d.ts
