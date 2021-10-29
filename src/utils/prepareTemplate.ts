@@ -22,13 +22,14 @@ export type StailTemplate<Props = any> = (
 export type InterpolationPrimitive = null | undefined | false | string
 
 export const multilineCommentRegEx = /(\/\*\*?[^\*]*\*\/)/g
-export const beginMultilineComment = /(\/\*\*?)/
-export const endMultilineComment = /(\*\/)/
-export const multipleSpaces = /([^\S\r\n]{2,})/g
-export const singleLineComment = /(\/\/.+)\n/g
-export const beginLineSpaces = /^([^\S\r\n]+)/gm
-export const endLineSpaces = /([^\S\r\n]+)$/g
-export const emptyLine = /([\s]+\n?)$|(?<=\n)([^\S\r\n]*\n)/g
+export const beginMultilineCommentRegEx = /(\/\*\*?)/
+export const endMultilineCommentRegEx = /(\*\/)/
+export const multipleSpacesRegEx = /([^\S\r\n]{2,})/g
+export const singleLineCommentRegEx = /(\/\/.+)\n/g
+export const beginLineSpacesRegEx = /^([^\S\r\n]+)/gm
+export const endLineSpacesRegEx = /([^\S\r\n]+)$/g
+export const emptyLineRegEx = /([\s]+\n?)$|(?<=\n)([^\S\r\n]*\n)/g
+export const newLineRegEx = /\n/g
 
 export const isStyledInterpolation = (
   handler: Interpolation<any>,
@@ -38,12 +39,12 @@ export const isStyledInterpolation = (
 export function initialCleanUp(template: readonly string[]) {
   return template.map((part) =>
     part
-      .replaceAll(singleLineComment, '')
-      .replaceAll(multilineCommentRegEx, ' ')
-      .replaceAll(beginLineSpaces, '')
-      .replaceAll(endLineSpaces, '')
-      .replaceAll(multipleSpaces, ' ')
-      .replaceAll(emptyLine, ''),
+      .replace(singleLineCommentRegEx, '')
+      .replace(multilineCommentRegEx, ' ')
+      .replace(beginLineSpacesRegEx, '')
+      .replace(endLineSpacesRegEx, '')
+      .replace(multipleSpacesRegEx, ' ')
+      .replace(emptyLineRegEx, ''),
   )
 }
 
@@ -60,7 +61,7 @@ export default function prepareTemplate<C>(
   // Initial cleanup from full comments and multiple spaces
   const clearTemplate = initialCleanUp(template)
   if (!handlers.length) {
-    return clearTemplate.map((part) => part.trim().replaceAll('\n', ' '))
+    return clearTemplate.map((part) => part.trim().replace(/\n/g, ' '))
   }
   const resultTemplate: StailTemplate<C> = []
   let startedMultilineComment = false
@@ -75,8 +76,8 @@ export default function prepareTemplate<C>(
     // 2. If previous part had started multiline comment, let's check for an end.
     if (startedMultilineComment) {
       // Multiline comment ended, lets remove what commented
-      if (endMultilineComment.test(part)) {
-        const [, , save] = part.split(endMultilineComment)
+      if (endMultilineCommentRegEx.test(part)) {
+        const [, , save] = part.split(endMultilineCommentRegEx)
         startedMultilineComment = false
         part = save
       } else {
@@ -92,8 +93,8 @@ export default function prepareTemplate<C>(
       return
     }
     // 4. Let's check for beginning multiline comment
-    if (beginMultilineComment.test(part)) {
-      const [save] = part.split(beginMultilineComment)
+    if (beginMultilineCommentRegEx.test(part)) {
+      const [save] = part.split(beginMultilineCommentRegEx)
       startedMultilineComment = true
       resultTemplate.push(save.trim())
       return
@@ -130,7 +131,7 @@ export default function prepareTemplate<C>(
       return target
     }
     if (typeof item === 'string') {
-      item = item.replaceAll('\n', ' ')
+      item = item.replace(/\n/g, ' ')
       if (previousIsString) {
         // @ts-ignore
         target[target.length - 1] = `${target[target.length - 1]} ${item}`
