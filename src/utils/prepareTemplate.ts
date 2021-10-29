@@ -1,6 +1,3 @@
-// export interface ArrayInterpolation<Props>
-//   extends Array<Interpolation<Props>> {}
-
 export interface FunctionInterpolation<Props> {
   (props: Props): string | undefined | null | false
 }
@@ -27,13 +24,28 @@ export type InterpolationPrimitive = null | undefined | false | string
 export const multilineCommentRegEx = /(\/\*\*?[^\*]*\*\/)/g
 export const beginMultilineComment = /(\/\*\*?)/
 export const endMultilineComment = /(\*\/)/
-export const multipleSpaces = /([\s]{2,})/g
+export const multipleSpaces = /([^\S\r\n]{2,})/g
 export const singleLineComment = /(\/\/.+)\n/g
+export const beginLineSpaces = /^([^\S\r\n]+)/gm
+export const endLineSpaces = /([^\S\r\n]+)$/g
+export const emptyLine = /([\s]+\n?)$|(?<=\n)([^\S\r\n]*\n)/g
 
 export const isStyledInterpolation = (
   handler: Interpolation<any>,
 ): handler is StyledInterpolation =>
   typeof handler === 'object' && !!handler?.name
+
+export function initialCleanUp(template: readonly string[]) {
+  return template.map((part) =>
+    part
+      .replaceAll(singleLineComment, '')
+      .replaceAll(multilineCommentRegEx, ' ')
+      .replaceAll(beginLineSpaces, '')
+      .replaceAll(endLineSpaces, '')
+      .replaceAll(multipleSpaces, ' ')
+      .replaceAll(emptyLine, ''),
+  )
+}
 
 /**
  * This method is trying to optimize template string by trimming spaces, removing comments
@@ -46,81 +58,79 @@ export default function prepareTemplate<C>(
   ...handlers: Interpolation<C>[]
 ) {
   // Initial cleanup from full comments and multiple spaces
-  const clearTemplate = template.map(
-    (part) =>
-      part
-        // Replacing multiline comments like /* some comment */
-        .replace(multilineCommentRegEx, ' ')
-        .replace(singleLineComment, '')
-        .split('\n')
-        // Trimming lines
-        .map((line) => line.replace(multipleSpaces, ' ').trim()),
-    // Removing empty lines and // comments
-  )
+  const clearTemplate = initialCleanUp(template)
   if (!handlers.length) {
-    return clearTemplate.map((part) =>
-      part.filter((line) => line !== '').join(' '),
-    )
+    return clearTemplate.map((part) => part.trim().replaceAll('\n', ' '))
   }
-  const resultTemplate: (string | FunctionInterpolation<C>)[] = []
+  const resultTemplate: StailTemplate<C> = []
   let startedMultilineComment = false
   let startedSinglelineComment = false
-  clearTemplate.forEach((rawLine, index) => {
-    let line = rawLine.join('\n')
+  clearTemplate.forEach((part, index) => {
+    // 1. Remove first line if previous part had unfinished single line comment
     if (startedSinglelineComment) {
-      const [, ...parts] = line.split('\n')
-      line = parts.join('\n')
+      const [, ...parts] = part.split('\n')
+      part = parts.join('\n')
       startedSinglelineComment = false
     }
-    // Let's check are we in the middle of multiline comment?
+    // 2. If previous part had started multiline comment, let's check for an end.
     if (startedMultilineComment) {
-      // End of multiline comment
-      if (endMultilineComment.test(line)) {
-        const [, , save] = line.split(endMultilineComment)
+      // Multiline comment ended, lets remove what commented
+      if (endMultilineComment.test(part)) {
+        const [, , save] = part.split(endMultilineComment)
         startedMultilineComment = false
-        line = save
+        part = save
       } else {
+        // Multiline comment doesn't finished, ignore all part and handler
         return
       }
     }
-    // Let's check, are we going to start multiline comment?
-    if (beginMultilineComment.test(line)) {
-      const [save] = line.split(beginMultilineComment)
-      startedMultilineComment = true
-      resultTemplate.push(save.trim())
-      return
-    }
-    if (line.includes('//')) {
-      const [save] = line.split('//')
+    // 3. Let's check this part for starting single line comment, it should be marked and saved only some parts
+    if (part.includes('//')) {
+      const [save] = part.split('//')
       resultTemplate.push(save.trim())
       startedSinglelineComment = true
       return
     }
+    // 4. Let's check for beginning multiline comment
+    if (beginMultilineComment.test(part)) {
+      const [save] = part.split(beginMultilineComment)
+      startedMultilineComment = true
+      resultTemplate.push(save.trim())
+      return
+    }
+    // 5. Get associated handler
     const handler = handlers[index]
+    // 6. If there's no one, just push the template
     if (!handler) {
-      resultTemplate.push(line.trim())
+      resultTemplate.push(part.trim())
       return
     }
+    // 7. Handler is a static string, let's add it to part
     if (typeof handler === 'string') {
-      line = `${line.trim()} ${handler.trim()}`
-      resultTemplate.push(line)
-      return
-    } else if (isStyledInterpolation(handler)) {
-      line = `${line.trim()} ${handler.name}`
-      resultTemplate.push(line)
+      part = `${part.trim()} ${handler.trim()}`
+      resultTemplate.push(part)
       return
     }
-    resultTemplate.push(line.trim())
+    // 8. Handler is styled object, let's get resulted className and add it to part
+    else if (isStyledInterpolation(handler)) {
+      part = `${part.trim()} ${handler.name}`
+      resultTemplate.push(part)
+      return
+    }
+    // 9. Finally, let's add part and handler to result template
+    resultTemplate.push(part.trim())
     resultTemplate.push(handler)
   })
 
   let previousIsString = false
+  // Let's optimize resulting array by merging strings and removing empty parts for result array
   return resultTemplate.reduce((target, item) => {
+    // Some parts can be empty after processing them
     if (item === '') {
       return target
     }
     if (typeof item === 'string') {
-      item = item.replaceAll('\n', ' ').replace(multipleSpaces, ' ')
+      item = item.replaceAll('\n', ' ')
       if (previousIsString) {
         // @ts-ignore
         target[target.length - 1] = `${target[target.length - 1]} ${item}`
@@ -132,5 +142,5 @@ export default function prepareTemplate<C>(
     }
     target.push(item)
     return target
-  }, [] as (string | FunctionInterpolation<C>)[])
+  }, [] as StailTemplate<C>)
 }

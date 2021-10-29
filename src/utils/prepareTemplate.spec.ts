@@ -1,7 +1,35 @@
 import { describe, expect, it } from '@jest/globals'
-import prepareTemplate from './prepareTemplate'
+import prepareTemplate, { initialCleanUp } from './prepareTemplate'
 
 describe('prepareTemplate', () => {
+  describe('initialCleanUp', () => {
+    it('should trim template', () => {
+      expect(
+        initialCleanUp([
+          `
+      some   value
+      another
+      `,
+        ]),
+      ).toMatchObject(['\nsome value\nanother'])
+    })
+    it('should remove comments', () => {
+      expect(
+        initialCleanUp([
+          `
+      some   value
+      // Some comment
+      another
+      /*
+      Some multiline comment
+      */
+     third
+     /** Some basic comment */
+      `,
+        ]),
+      ).toMatchObject(['\nsome value\nanother\nthird'])
+    })
+  })
   it('should trim template', () => {
     expect(
       prepareTemplate([
