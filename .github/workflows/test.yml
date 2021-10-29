@@ -18,10 +18,10 @@ jobs:
           node-version: ${{ matrix.node_version }}
       - name: Prepare env
         run: yarn install
-      - name: Check types
-        run: yarn dist
       - name: Run tests
         run: yarn test --coverage
+      - name: Check types
+        run: yarn dist
       - uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
