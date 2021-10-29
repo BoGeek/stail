@@ -1,5 +1,9 @@
 # Stail
 
+![!CI](https://github.com/BoGeek/stail/workflows/CI/badge.svg)
+[![npm version](https://badge.fury.io/js/stail.svg)](https://badge.fury.io/js/stail)
+[![codecov](https://codecov.io/gh/BoGeek/stail/branch/main/graph/badge.svg?token=xf8higF9SQ)](https://codecov.io/gh/BoGeek/stail)
+
 Incredible fast template toolkit for making new or re-styling existing components with Tailwind CSS.
 
 ## Why it's needed?

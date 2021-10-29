@@ -19,7 +19,9 @@ describe('prepareTemplate', () => {
           `
       some   value
       // Some comment
+      // /**
       another
+      // */
       /*
       Some multiline comment
       */
@@ -47,7 +49,9 @@ describe('prepareTemplate', () => {
         `
     some   value
     // Some comment
+    // /**
     another
+    // */
     /*
     Some multiline comment
     */
