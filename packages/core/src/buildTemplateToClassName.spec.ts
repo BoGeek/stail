@@ -1,5 +1,5 @@
 import { describe, expect } from '@jest/globals'
-import buildTemplateToClassName from './buildTemplateToClassName'
+import { buildTemplateToClassName } from './buildTemplateToClassName'
 import { StailTemplate } from './prepareTemplate'
 
 describe('buildTemplateToClassName', () => {

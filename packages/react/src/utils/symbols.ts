@@ -1,5 +1,5 @@
-import { FC, ComponentType } from 'react'
-import { FunctionInterpolation } from './prepareTemplate'
+import type { FC, ComponentType } from 'react'
+import type { FunctionInterpolation } from '@stail/core'
 
 // Symbol for an original component or a JSX tag
 export const StailComponent = Symbol('StailComponent')

@@ -1,7 +1,7 @@
 import { describe, expect } from '@jest/globals'
 import { render } from '@testing-library/react'
 import { createRef } from 'react'
-import makePropFilter from './makePropFilter'
+import { makePropFilter } from '@stail/core'
 
 import makeRender from './makeRender'
 

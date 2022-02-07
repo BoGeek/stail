@@ -54,7 +54,7 @@ export function initialCleanUp(template: readonly string[]) {
  *
  * It returns prepared array of strings and functions to be used internally by a component.
  */
-export default function prepareTemplate<C>(
+export function prepareTemplate<C>(
   template: readonly string[],
   ...handlers: Interpolation<C>[]
 ) {

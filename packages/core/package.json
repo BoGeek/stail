@@ -1,0 +1,25 @@
+{
+  "name": "@stail/core",
+  "version": "0.5.0",
+  "author": "Alex Grand <alex@granted.name>",
+  "license": "MIT",
+  "description": "Use TailwindCSS styled components",
+  "main": "dist/cjs/index.js",
+  "module": "dist/mjs/index.js",
+  "types": "dist/mjs/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BoGeek/stail.git"
+  },
+  "keywords": [
+    "tailwindcss",
+    "tailwind",
+    "styled-components",
+    "styled",
+    "emotion"
+  ],
+  "peerDependencies": {
+    "react": "*",
+    "tailwindcss": "*"
+  }
+}

@@ -1,8 +1,9 @@
 import { ComponentProps, ComponentType, MutableRefObject } from 'react'
 import prepareTemplate, {
   StailTemplate as Template,
-} from './utils/prepareTemplate'
-import { Interpolation } from './utils/prepareTemplate'
+  type Interpolation,
+  stripClassNamesFromTemplate
+} from '@stail/core'
 import {
   decorate,
   DecoratedComponent,
@@ -11,7 +12,6 @@ import {
   StailFilter,
   StailTemplate,
 } from './utils/symbols'
-import stripClassNamesFromTemplate from './utils/stripClassNamesFromTemplate'
 import makeRender from './utils/makeRender'
 
 export interface CreateStailedComponent<ComponentProps extends {}> {

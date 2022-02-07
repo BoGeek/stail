@@ -1,7 +1,7 @@
 import cx from './cx'
 import { FunctionInterpolation } from './prepareTemplate'
 
-export default function buildTemplateToClassName<Props>(
+export function buildTemplateToClassName<Props>(
   template: (string | FunctionInterpolation<Props>)[],
   props: Props,
 ) {

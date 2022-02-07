@@ -1,6 +1,6 @@
 import { StailTemplate } from './prepareTemplate'
 
-export default function stripClassNamesFromTemplate(
+export function stripClassNamesFromTemplate(
   oldTemplate: StailTemplate,
   exclude?: (string | undefined | null | false)[],
 ) {

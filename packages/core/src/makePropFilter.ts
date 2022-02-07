@@ -6,7 +6,7 @@ export type PropFilter<C> = (prop: PropertyKey) => boolean
  * This method is excluding props that we should not pass to the child component.
  * By default it's also stripping props starting from $ for native elements
  */
-export default function makePropFilter<
+export function makePropFilter<
   P extends object,
   C extends Partial<P> = Partial<P>,
 >(

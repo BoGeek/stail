@@ -2,7 +2,7 @@
 # Manual changes might be lost - proceed with caution!
 
 __metadata:
-  version: 4
+  version: 5
   cacheKey: 8
 
 "@babel/code-frame@npm:^7.10.4, @babel/code-frame@npm:^7.12.13, @babel/code-frame@npm:^7.14.5, @babel/code-frame@npm:^7.15.8":
@@ -21,7 +21,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:7.15.8, @babel/core@npm:^7.1.0, @babel/core@npm:^7.7.2, @babel/core@npm:^7.7.5":
+"@babel/core@npm:^7.1.0, @babel/core@npm:^7.7.2, @babel/core@npm:^7.7.5":
   version: 7.15.8
   resolution: "@babel/core@npm:7.15.8"
   dependencies:
@@ -685,6 +685,29 @@ __metadata:
   checksum: 97a78e6f83dd420d73b155a0438cd0fd3392e706b8314530db3d99354689cc714eb3d18540be2aedcd3a3d6070e14f509dce7c6cc817701e9538b3b8ac423eaa
   languageName: node
   linkType: hard
+
+"@stail/core@^0.5.0, @stail/core@workspace:packages/core":
+  version: 0.0.0-use.local
+  resolution: "@stail/core@workspace:packages/core"
+  peerDependencies:
+    react: "*"
+    tailwindcss: "*"
+  languageName: unknown
+  linkType: soft
+
+"@stail/css@workspace:packages/css":
+  version: 0.0.0-use.local
+  resolution: "@stail/css@workspace:packages/css"
+  languageName: unknown
+  linkType: soft
+
+"@stail/plugins@workspace:packages/plugins":
+  version: 0.0.0-use.local
+  resolution: "@stail/plugins@workspace:packages/plugins"
+  peerDependencies:
+    tailwindcss: "*"
+  languageName: unknown
+  linkType: soft
 
 "@testing-library/dom@npm:^8.0.0":
   version: 8.10.1
@@ -1794,6 +1817,7 @@ fsevents@^2.3.2:
   dependencies:
     node-gyp: latest
   checksum: 97ade64e75091afee5265e6956cb72ba34db7819b4c3e94c431d4be2b19b8bb7a2d4116da417950c3425f17c8fe693d25e20212cac583ac1521ad066b77ae31f
+  conditions: os=darwin
   languageName: node
   linkType: hard
 
@@ -1802,7 +1826,7 @@ fsevents@^2.3.2:
   resolution: "fsevents@patch:fsevents@npm%3A2.3.2#~builtin<compat/fsevents>::version=2.3.2&hash=18f3a7"
   dependencies:
     node-gyp: latest
-  checksum: edbd0fd80be379c14409605f77e52fdc78a119e17f875e8b90a220c3e5b29e54a1477c21d91fd30b957ea4866406dc3ff87b61432d2840ff8866b309e5866140
+  conditions: os=darwin
   languageName: node
   linkType: hard
 
@@ -2510,7 +2534,7 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
-"jest-resolve@npm:27.2.5, jest-resolve@npm:^27.2.5":
+"jest-resolve@npm:^27.2.5":
   version: 27.2.5
   resolution: "jest-resolve@npm:27.2.5"
   dependencies:
@@ -3411,6 +3435,16 @@ fsevents@^2.3.2:
   languageName: node
   linkType: hard
 
+"react@workspace:packages/react":
+  version: 0.0.0-use.local
+  resolution: "react@workspace:packages/react"
+  dependencies:
+    "@stail/core": ^0.5.0
+  peerDependencies:
+    react: "*"
+  languageName: unknown
+  linkType: soft
+
 "readable-stream@npm:^2.0.6":
   version: 2.3.7
   resolution: "readable-stream@npm:2.3.7"
@@ -3993,7 +4027,7 @@ typescript@^4.4.4:
 
 "typescript@patch:typescript@^4.4.4#~builtin<compat/typescript>":
   version: 4.4.4
-  resolution: "typescript@patch:typescript@npm%3A4.4.4#~builtin<compat/typescript>::version=4.4.4&hash=ddd1e8"
+  resolution: "typescript@patch:typescript@npm%3A4.4.4#~builtin<compat/typescript>::version=4.4.4&hash=493e53"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver

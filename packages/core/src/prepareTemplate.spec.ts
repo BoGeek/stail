@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@jest/globals'
-import prepareTemplate, { initialCleanUp } from './prepareTemplate'
+import { initialCleanUp, prepareTemplate } from './prepareTemplate'
 
 describe('prepareTemplate', () => {
   describe('initialCleanUp', () => {

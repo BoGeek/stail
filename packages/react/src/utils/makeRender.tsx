@@ -1,10 +1,9 @@
 // The ref's in this file makes TS server run like a crazy, so please
 // remove this line only when it'll be resolved
 // @ts-nocheck
-import { forwardRef, ComponentType } from 'react'
-import buildTemplateToClassName from './buildTemplateToClassName'
-import { StailTemplate } from './prepareTemplate'
-import { DecoratedComponent } from './symbols'
+import { forwardRef, type ComponentType } from 'react'
+import { buildTemplateToClassName, type StailTemplate } from '@stail/core'
+import type { DecoratedComponent } from './symbols'
 
 export interface SpecificStailProps<C> {
   as?: C

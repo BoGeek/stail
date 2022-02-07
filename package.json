@@ -1,9 +1,14 @@
 {
   "name": "stail",
   "version": "0.4.2",
-  "packageManager": "yarn@3.1.0-rc.8",
+  "packageManager": "yarn@3.1.1",
   "license": "MIT",
   "description": "Use TailwindCSS styled components",
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
   "main": "dist/cjs/index.js",
   "module": "dist/mjs/index.js",
   "types": "dist/mjs/index.d.ts",
