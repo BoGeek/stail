@@ -2,7 +2,8 @@
  * @jest-environment node
  */
 import { describe, expect, it, jest } from '@jest/globals'
-import css from './css'
+import css, { getGlobal } from './css'
+const glob = getGlobal()
 
 describe('css', () => {
   it('should make className from a string', () => {
@@ -40,10 +41,12 @@ describe('css', () => {
         }),
       },
     }
-    const originalDocument = globalThis.document
+    const originalDescriptor = Object.getOwnPropertyDescriptor(glob, 'document')
+    Object.defineProperty(glob, 'document', {
+      get: () => document,
+      configurable: true,
+    })
 
-    // @ts-ignore
-    globalThis.document = document
     const result = css`
       --tw-gradient-to: hsl(223 13.7% 10%);
       --tw-gradient-from: rgba(0, 78, 19, var(--tw-bg-opacity, 1));
@@ -55,7 +58,7 @@ describe('css', () => {
       );
     `
     expect(result).toBe('stail--6a693d87')
-    globalThis.document = originalDocument
+    Object.defineProperty(glob, 'document', originalDescriptor || {})
     expect(element.setAttribute).toBeCalled()
     expect(document.createElement).toBeCalled()
     expect(document.querySelector).toBeCalled()
@@ -87,9 +90,11 @@ describe('css', () => {
         }),
       },
     }
-    const originalDocument = globalThis.document
-    // @ts-ignore
-    globalThis.document = document
+    const originalDescriptor = Object.getOwnPropertyDescriptor(glob, 'document')
+    Object.defineProperty(glob, 'document', {
+      get: () => document,
+      configurable: true,
+    })
     const result = css`
       // Some comment
       --tw-gradient-to: hsl(223 13.7% 10%);
@@ -103,7 +108,7 @@ describe('css', () => {
       );
     `
     expect(result).toBe('stail--6a693d87')
-    globalThis.document = originalDocument
+    Object.defineProperty(glob, 'document', originalDescriptor || {})
     expect(element.setAttribute).toBeCalled()
     expect(document.createElement).not.toBeCalled()
     expect(document.querySelector).toBeCalled()

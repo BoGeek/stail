@@ -1,20 +1,37 @@
 {
-  "name": "react",
+  "name": "@stail/react",
   "version": "0.5.0",
   "author": "Alex Grand <alex@granted.name>",
   "license": "MIT",
   "description": "Use TailwindCSS styled components",
-  "main": "dist/cjs/index.js",
-  "module": "dist/mjs/index.js",
-  "types": "dist/mjs/index.d.ts",
+  "main": "dist/cjs/src/index.js",
+  "module": "dist/mjs/src/index.js",
+  "types": "dist/mjs/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/mjs/src/index.d.ts",
+      "import": "./dist/mjs/src/index.js",
+      "require": "./dist/cjs/src/index.js"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BoGeek/stail.git"
   },
   "dependencies": {
-    "@stail/core": "^0.5.0"
+    "@stail/core": "workspace:^0.5.0"
   },
   "peerDependencies": {
     "react": "*"
+  },
+  "scripts": {
+    "build": "yarn run -T tsc -p tsconfig.json && yarn run -T tsc -p tsconfig.mjs.json && ../../fixup.sh"
+  },
+  "devDependencies": {
+    "@jest/globals": "^27.2.5",
+    "@testing-library/react": "^12.1.2",
+    "@types/react": "^17.0.29",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   }
 }

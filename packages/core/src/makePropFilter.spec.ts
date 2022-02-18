@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@jest/globals'
-import { makePropFilter } from './makePropFilter'
+import { makePropFilter } from './makePropFilter.js'
 
 describe('makePropFilter', () => {
   it('should filter special props for native elements', () => {

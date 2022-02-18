@@ -1,10 +1,14 @@
+import type {
+  ComponentProps,
+  ComponentType,
+  FC,
+  JSXElementConstructor,
+} from 'react'
+import { domElements, makePropFilter } from '@stail/core'
+import type { DecoratedComponent } from './utils/symbols.js'
 import createStailedComponent, {
-  CreateStailedComponent,
-} from './createStailedComponent'
-import { ComponentProps, ComponentType, FC, JSXElementConstructor } from 'react'
-import domElements from './utils/domElements'
-import makePropFilter from './utils/makePropFilter'
-import { DecoratedComponent } from './utils/symbols'
+  type CreateStailedComponent,
+} from './createStailedComponent.js'
 
 export type PropsOf<
   C extends keyof JSX.IntrinsicElements | JSXElementConstructor<any>,

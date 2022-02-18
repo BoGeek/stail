@@ -1,4 +1,4 @@
-import prepareTemplate, { InterpolationPrimitive } from './prepareTemplate'
+import { prepareTemplate, type InterpolationPrimitive } from '@stail/core'
 
 /**
  * Simple hash function to generate unique className for a template
@@ -14,6 +14,19 @@ export function hashCode(str: string) {
     hash = hash & hash // Convert to 32bit integer
   }
   return hash.toString(16)
+}
+
+export function getGlobal() {
+  if (typeof globalThis !== 'undefined') {
+    return globalThis
+  }
+  if (typeof window !== 'undefined') {
+    return window
+  }
+  if (typeof global !== 'undefined') {
+    return global
+  }
+  throw new Error('unable to locate global object')
 }
 
 /**
@@ -49,7 +62,7 @@ export default function css(
   template: TemplateStringsArray,
   ...handlers: InterpolationPrimitive[]
 ) {
-  const inject = typeof document !== 'undefined'
+  const inject = typeof getGlobal().document !== 'undefined'
   return prepareTemplate(template, ...handlers)
     .map((line) => {
       if (typeof line !== 'string') {
@@ -62,11 +75,11 @@ export default function css(
       if (inject) {
         const style =
           // Try to select previous style
-          document.querySelector(`[data-stail-id="${className}"]`) ||
-          document.createElement('style')
+          getGlobal().document.querySelector(`[data-stail-id="${className}"]`) ||
+          getGlobal().document.createElement('style')
         style.setAttribute('data-stail-id', className)
         style.innerHTML = `.${className} { ${line} }`
-        document.head.appendChild(style)
+        getGlobal().document.head.appendChild(style)
       }
       return className
     })

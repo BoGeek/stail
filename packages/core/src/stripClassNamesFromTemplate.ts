@@ -1,4 +1,4 @@
-import { StailTemplate } from './prepareTemplate'
+import type { StailTemplate } from './prepareTemplate.js'
 
 export function stripClassNamesFromTemplate(
   oldTemplate: StailTemplate,

@@ -21,14 +21,33 @@ export type StailTemplate<Props = any> = (
 
 export type InterpolationPrimitive = null | undefined | false | string
 
+/**
+ * Match "// some" comments
+ */
+export const singleLineCommentRegEx = /(\/\/.+)\n/g
+/**
+ * Match multiline comments blocks beginning from /**
+ */
 export const multilineCommentRegEx = /(\/\*\*?[^\*]*\*\/)/g
+/**
+ * Spaces on beginning of the line
+ */
+export const beginLineSpacesRegEx = /^([^\S\r\n]+)/gm
+/**
+ * Trailing spaces on end of the lines
+ */
+export const endLineSpacesRegEx = /([^\S\r\n]+)$/g
+/**
+ * Spaces like "some  thing     s"
+ */
+export const multipleSpacesRegEx = /([^\S\r\n]{2,})/g
+/**
+ * Line that doesn't have anything
+ */
+export const emptyLineRegEx = /([\s]+\n?)$|(?<=\n)([^\S\r\n]*\n)/g
+
 export const beginMultilineCommentRegEx = /(\/\*\*?)/
 export const endMultilineCommentRegEx = /(\*\/)/
-export const multipleSpacesRegEx = /([^\S\r\n]{2,})/g
-export const singleLineCommentRegEx = /(\/\/.+)\n/g
-export const beginLineSpacesRegEx = /^([^\S\r\n]+)/gm
-export const endLineSpacesRegEx = /([^\S\r\n]+)$/g
-export const emptyLineRegEx = /([\s]+\n?)$|(?<=\n)([^\S\r\n]*\n)/g
 export const newLineRegEx = /\n/g
 
 export const isStyledInterpolation = (

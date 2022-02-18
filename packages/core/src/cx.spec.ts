@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@jest/globals'
-import { cx } from './cx'
+import { cx } from './cx.js'
 
 describe('cx', () => {
   it('should filter nullable values and concat string', () => {

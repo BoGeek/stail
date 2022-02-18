@@ -4,9 +4,16 @@
   "author": "Alex Grand <alex@granted.name>",
   "license": "MIT",
   "description": "Use TailwindCSS styled components",
-  "main": "dist/cjs/index.js",
-  "module": "dist/mjs/index.js",
-  "types": "dist/mjs/index.d.ts",
+  "main": "dist/cjs/src/index.js",
+  "module": "dist/mjs/src/index.js",
+  "types": "dist/mjs/src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/mjs/src/index.d.ts",
+      "import": "./dist/mjs/src/index.js",
+      "require": "./dist/cjs/src/index.js"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BoGeek/stail.git"
@@ -18,8 +25,10 @@
     "styled",
     "emotion"
   ],
-  "peerDependencies": {
-    "react": "*",
-    "tailwindcss": "*"
+  "scripts": {
+    "build": "yarn run -T tsc --build tsconfig.json && yarn run -T tsc --build tsconfig.mjs.json && ../../fixup.sh"
+  },
+  "devDependencies": {
+    "@jest/globals": "^27.2.5"
   }
 }

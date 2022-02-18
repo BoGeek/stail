@@ -1,6 +1,6 @@
-import { describe, expect } from '@jest/globals'
-import { buildTemplateToClassName } from './buildTemplateToClassName'
-import { StailTemplate } from './prepareTemplate'
+import { describe, expect, it } from '@jest/globals'
+import { buildTemplateToClassName } from './buildTemplateToClassName.js'
+import type { StailTemplate } from './prepareTemplate.js'
 
 describe('buildTemplateToClassName', () => {
   it('should build classNames from template', () => {

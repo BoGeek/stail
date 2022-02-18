@@ -1,4 +1,4 @@
-import { filterSpecialFields } from './filterSpecialFields'
+import { filterSpecialFields } from './filterSpecialFields.js'
 
 export type PropFilter<C> = (prop: PropertyKey) => boolean
 

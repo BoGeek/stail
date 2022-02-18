@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "dist/cjs"
+  },
+  "include": ["src"],
+  "exclude": ["dist"],
+  "references": [
+    {
+      "path": "../core"
+    }
+  ]
+}

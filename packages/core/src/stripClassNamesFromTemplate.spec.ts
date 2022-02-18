@@ -1,5 +1,5 @@
-import { describe, it } from '@jest/globals'
-import { stripClassNamesFromTemplate } from './stripClassNamesFromTemplate'
+import { describe, it, expect } from '@jest/globals'
+import { stripClassNamesFromTemplate } from './stripClassNamesFromTemplate.js'
 
 describe('stripClassNamesFromTemplate', () => {
   it('should filter classNames', () => {

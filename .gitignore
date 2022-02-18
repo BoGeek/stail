@@ -13,3 +13,5 @@ src/*.js
 dist/*.js
 *.js.map
 *.d.ts
+*.js
+*.d.ts.map

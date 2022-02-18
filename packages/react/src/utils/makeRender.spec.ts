@@ -1,9 +1,10 @@
-import { describe, expect } from '@jest/globals'
+import React from 'react'
+import runtime from 'react/jsx-runtime.js'
+import { describe, expect, it } from '@jest/globals'
 import { render } from '@testing-library/react'
-import { createRef } from 'react'
 import { makePropFilter } from '@stail/core'
 
-import makeRender from './makeRender'
+import makeRender from './makeRender.js'
 
 describe('makeRender', () => {
   it('should make a component', () => {
@@ -12,7 +13,8 @@ describe('makeRender', () => {
       ['rounded py-2 px-4 bg-gray-500 text-white'],
       (props) => props,
     )
-    const { container } = render(<Button />)
+    // @ts-ignore
+    const { container } = render(runtime.jsx(Button, {}, void 0))
     expect(container.firstChild).toMatchInlineSnapshot(`
       <button
         class="rounded py-2 px-4 bg-gray-500 text-white"
@@ -26,7 +28,8 @@ describe('makeRender', () => {
       ['rounded py-2 px-4 bg-gray-500 text-white'],
       (props) => props,
     )
-    const { container } = render(<Button as="button" />)
+    // @ts-ignore
+    const { container } = render(runtime.jsx(Button, { as: 'button' }, void 0))
     expect(container.firstChild).toMatchInlineSnapshot(`
       <button
         class="rounded py-2 px-4 bg-gray-500 text-white"
@@ -40,7 +43,10 @@ describe('makeRender', () => {
       ['rounded py-2 px-4 bg-gray-500 text-white'],
       makePropFilter(true),
     )
-    const { container } = render(<Button $active data-value="1" />)
+    const { container } = render(
+      // @ts-ignore
+      runtime.jsx(Button, { $active: true, 'data-value': '1' }, void 0),
+    )
     expect(container.firstChild).toMatchInlineSnapshot(`
       <button
         class="rounded py-2 px-4 bg-gray-500 text-white"
@@ -50,7 +56,7 @@ describe('makeRender', () => {
   })
 
   it('should call template handler', () => {
-    const Button = makeRender(
+    const Button = makeRender<'button', { $active: boolean }, {}>(
       'button',
       [
         'rounded py-2 px-4',
@@ -58,7 +64,10 @@ describe('makeRender', () => {
       ],
       makePropFilter(true),
     )
-    const { container } = render(<Button $active data-value="1" />)
+    const { container } = render(
+      // @ts-ignore
+      runtime.jsx(Button, { $active: true, 'data-value': '1' }, void 0),
+    )
     expect(container.firstChild).toMatchInlineSnapshot(`
       <button
         class="rounded py-2 px-4 bg-gray-500 text-white"
@@ -73,8 +82,15 @@ describe('makeRender', () => {
       ['rounded py-2 px-4 bg-gray-500 text-white'],
       makePropFilter(true),
     )
-    const ref = createRef()
-    const { container } = render(<Button ref={ref} $active data-value="1" />)
+    const ref = React.createRef()
+    const { container } = render(
+      // @ts-ignore
+      runtime.jsx(
+        Button,
+        { ref: ref, $active: true, 'data-value': '1' },
+        void 0,
+      ),
+    )
     expect(container.firstChild).toMatchInlineSnapshot(`
       <button
         class="rounded py-2 px-4 bg-gray-500 text-white"

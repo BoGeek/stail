@@ -1,24 +1,23 @@
 {
   "compilerOptions": {
     "allowJs": false,
-    "baseUrl": "src",
     "declaration": true,
+    "sourceMap": true,
+    "composite": true,
+    "declarationMap": true,
     "inlineSourceMap": false,
     "lib": ["esnext", "DOM"],
-    "listEmittedFiles": false,
-    "listFiles": false,
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
     "pretty": true,
-    "rootDir": "src",
     "skipDefaultLibCheck": true,
-    "diagnostics": true,
     "skipLibCheck": true,
     "strict": true,
     "traceResolution": false,
-    "jsx": "react-jsx"
-  },
-  "compileOnSave": false,
-  "exclude": ["node_modules", "dist"],
-  "include": ["src"]
+    "jsx": "react-jsx",
+    "importsNotUsedAsValues": "error",
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true,
+    "esModuleInterop": true
+  }
 }
