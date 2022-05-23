@@ -1,8 +1,0 @@
-{
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "outDir": "dist/mjs",
-    "module": "ES2022",
-    "target": "esnext"
-  }
-}

@@ -79,6 +79,7 @@ export interface BaseCreateStailed {
   <C extends ComponentType<ComponentProps<C>>>(
     component: C,
     options?: StailedOptions,
+    // @ts-ignore
   ): CreateStailedComponent<PropsOf<C>>
 
   <
@@ -130,6 +131,7 @@ const stailRaw: BaseCreateStailed = <
 const stail = stailRaw as CreateStailed
 
 domElements.forEach((item) => {
+  // @ts-ignore
   stail[item] = stail(item)
 })
 

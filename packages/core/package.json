@@ -1,19 +1,19 @@
 {
   "name": "@stail/core",
-  "version": "0.5.0",
-  "author": "Alex Grand <alex@granted.name>",
+  "version": "1.0.0-alpha.1",
+  "author": "Oleksandr Hanzha <alex@granted.name>",
   "license": "MIT",
   "description": "Use TailwindCSS styled components",
-  "main": "dist/cjs/src/index.js",
-  "module": "dist/mjs/src/index.js",
-  "types": "dist/mjs/src/index.d.ts",
+  "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/mjs/src/index.d.ts",
-      "import": "./dist/mjs/src/index.js",
-      "require": "./dist/cjs/src/index.js"
+      "import": {
+        "types": "./dist/src/index.d.ts",
+        "default": "./dist/src/index.js"
+      }
     }
   },
+  "types": "./dist/src/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BoGeek/stail.git"
@@ -26,9 +26,9 @@
     "emotion"
   ],
   "scripts": {
-    "build": "yarn run -T tsc --build tsconfig.json && yarn run -T tsc --build tsconfig.mjs.json && ../../fixup.sh"
+    "build": "yarn run -T tsc --build"
   },
   "devDependencies": {
-    "@jest/globals": "^27.2.5"
+    "@jest/globals": "^28.1.0"
   }
 }

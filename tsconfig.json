@@ -1,8 +1,10 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es2015"
+    "module": "Node16",
+    "moduleResolution": "Node16",
+    "moduleDetection": "force",
+    "target": "ES2022"
   },
   "references": [
     {
@@ -10,9 +12,6 @@
     },
     {
       "path": "packages/css"
-    },
-    {
-      "path": "packages/plugins"
     },
     {
       "path": "packages/react"

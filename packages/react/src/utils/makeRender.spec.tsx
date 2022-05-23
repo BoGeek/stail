@@ -1,5 +1,4 @@
 import React from 'react'
-import runtime from 'react/jsx-runtime.js'
 import { describe, expect, it } from '@jest/globals'
 import { render } from '@testing-library/react'
 import { makePropFilter } from '@stail/core'
@@ -14,7 +13,7 @@ describe('makeRender', () => {
       (props) => props,
     )
     // @ts-ignore
-    const { container } = render(runtime.jsx(Button, {}, void 0))
+    const { container } = render(<Button />)
     expect(container.firstChild).toMatchInlineSnapshot(`
       <button
         class="rounded py-2 px-4 bg-gray-500 text-white"
@@ -29,7 +28,7 @@ describe('makeRender', () => {
       (props) => props,
     )
     // @ts-ignore
-    const { container } = render(runtime.jsx(Button, { as: 'button' }, void 0))
+    const { container } = render(<Button as="button" />)
     expect(container.firstChild).toMatchInlineSnapshot(`
       <button
         class="rounded py-2 px-4 bg-gray-500 text-white"
@@ -45,7 +44,7 @@ describe('makeRender', () => {
     )
     const { container } = render(
       // @ts-ignore
-      runtime.jsx(Button, { $active: true, 'data-value': '1' }, void 0),
+      <Button $active={true} data-value="1" />,
     )
     expect(container.firstChild).toMatchInlineSnapshot(`
       <button
@@ -66,7 +65,7 @@ describe('makeRender', () => {
     )
     const { container } = render(
       // @ts-ignore
-      runtime.jsx(Button, { $active: true, 'data-value': '1' }, void 0),
+      <Button $active={true} data-value="1" />,
     )
     expect(container.firstChild).toMatchInlineSnapshot(`
       <button
@@ -85,11 +84,7 @@ describe('makeRender', () => {
     const ref = React.createRef()
     const { container } = render(
       // @ts-ignore
-      runtime.jsx(
-        Button,
-        { ref: ref, $active: true, 'data-value': '1' },
-        void 0,
-      ),
+      <Button ref={ref} $active={true} data-value="1" />,
     )
     expect(container.firstChild).toMatchInlineSnapshot(`
       <button

@@ -1,7 +1,7 @@
 // The ref's in this file makes TS server run like a crazy, so please
 // remove this line only when it'll be resolved
 import React from 'react'
-import runtime from 'react/jsx-runtime.js'
+import runtime from 'react/jsx-runtime'
 import { buildTemplateToClassName, type StailTemplate } from '@stail/core'
 import type { DecoratedComponent } from './symbols.js'
 
@@ -33,9 +33,13 @@ export default function makeRender<
       )
       return (
         // @ts-ignore It's trying to use all possible combinations of tags here
-        runtime.jsx(As
-        // @ts-ignore refs for unknown elements are hard for TS
-        , { ...filter(props), ref: ref, className: className }, void 0))
+        runtime.jsx(
+          As,
+          // @ts-ignore refs for unknown elements are hard for TS
+          { ...filter(props), ref: ref, className: className },
+          void 0,
+        )
+      )
     },
   )
 }

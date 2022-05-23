@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 import { describe, expect, it, jest } from '@jest/globals'
-import css, { getGlobal } from './css'
+import css, { getGlobal } from './css.js'
 const glob = getGlobal()
 
 describe('css', () => {
