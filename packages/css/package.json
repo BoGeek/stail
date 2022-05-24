@@ -1,6 +1,6 @@
 {
   "name": "@stail/css",
-  "version": "0.5.0",
+  "version": "1.0.0-alpha.1",
   "author": "Alex Grand <alex@granted.name>",
   "license": "MIT",
   "description": "Use TailwindCSS styled components",
