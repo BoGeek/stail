@@ -32,6 +32,8 @@ And this is not the biggest className line that I've ever seen.
 Let's rewrite this into Stail:
 
 ```ts
+import stail from '@stail/react'
+
 const Card = stail.div`
   // Layout
   flex flex-col relative flex-1
@@ -59,13 +61,13 @@ what each item is representing in end CSS file
 ## How to install
 
 ```
-yarn add stail
+yarn add @stail/core @stail/react
 ```
 
 Or
 
 ```
-npm install --save stail
+npm install --save @stail/core @stail/react
 ```
 
 That's it. You don't need to configure TailwindCSS to use it with Stail. It will just work from the box.
@@ -79,6 +81,8 @@ Stail supports single line columns like `// My Comment` so as multiline `/* ... 
 ### Props passing
 
 ```ts
+import stail from '@stail/react'
+
 const IconButton = stail.button`
   rounded-[50%] py-0 px-2 inline-flex mr-0 w-[fit-content] ${(props) =>
     props.active
